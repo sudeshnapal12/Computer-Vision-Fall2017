@@ -137,6 +137,21 @@ def deconvolution(img_in):
     # now for example we can reconstruct the blurred image from its FT
     img_out = ift(imdeconvf)*255
 	
+	#magnitude_spectrum = 20*np.log(np.abs(blurimf))
+	#plt.subplot(122),plt.imshow(magnitude_spectrum)
+	#plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
+	#plt.show()
+	
+	#g_magnitude_spectrum = 20*np.log(np.abs(gkf))
+	#plt.subplot(122),plt.imshow(g_magnitude_spectrum)
+	#plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
+	#plt.show()
+	
+	#divide_magnitude_spectrum = 20*np.log(np.abs(imdeconvf))
+	#plt.subplot(122),plt.imshow(divide_magnitude_spectrum)
+	#plt.title('Magnitude Spectrum'), plt.xticks([]), plt.yticks([])
+	#plt.show()
+	
     return True, img_out
 
 def Question2():
