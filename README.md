@@ -1,4 +1,4 @@
-This repository contains all the assignments done as part of CSE527 - Computer Vision class done under Professor Roy Shilkrot. Below is the summary of tasks in each assignment.
+This repository contains all the assignments done as part of CSE527 - Computer Vision class done under [Professor Roy Shilkrot](http://hi.cs.stonybrook.edu/). Below is the summary of tasks in each assignment.
 
 ## 0. Hello Vision
 Write an OpenCV program to do the following things:
