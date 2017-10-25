@@ -10,7 +10,7 @@
 ```
 >> python main_bonus.py astronaut.png astronaut_marking.png ./
 ```
-Segmented to stored in mask.png
+Segmented to stored in 'mask.png'.
  
 
 # "Wow factor" bonus (Interactive segmentation):
@@ -30,4 +30,4 @@ Implement an interactive interface with OpenCV so that we can draw the marking w
 * Key press 'm' to toggle between red and blue.
 * After a minimum one marking each of foreground and background, segmented image window pops up.
 * Subsequent blue or red markings update the segmented image accordingly.
-* Key press 'ESC' saves the segmented image and closes all the image windows.
+* Key press 'ESC' saves the segmented image in 'mask.png' and closes all the image windows.
