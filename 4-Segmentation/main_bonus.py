@@ -15,6 +15,12 @@ from skimage.util import img_as_float
 import maxflow
 from scipy.spatial import Delaunay
 
+mode = True # if True, change color of curve. Press 'm' to toggle to curve
+drawing = False # true if mouse is pressed
+ix,iy = -1,-1
+red = False
+blue = False
+
 def help_message():
    print("Usage: [Input_Image] [Input_Marking] [Output_Directory]")
    print("[Input_Image]")
@@ -48,8 +54,8 @@ def superpixels_histograms_neighbors(img):
 
 # Get superpixels IDs for FG and BG from marking
 def find_superpixels_under_marking(marking,  superpixels):
-    fg_segments = np.unique(superpixels[marking[:,:,0]!=255])
-    bg_segments = np.unique(superpixels[marking[:,:,2]!=255])
+    fg_segments = np.unique(superpixels[marking[:,:,0]!=0])
+    bg_segments = np.unique(superpixels[marking[:,:,2]!=0])
     return (fg_segments, bg_segments)
 
 # Sum up the histograms for a given selection of superpixel IDs, normalize
@@ -127,23 +133,43 @@ def RMSD(target, master):
 
         return total_diff;
 
-if __name__ == '__main__':
-   
-    # validate the input arguments
-    if (len(sys.argv) != 4):
-        help_message()
-        sys.exit()
+# mouse callback function
+def draw_circle(event,x,y,flags,param):
+    global ix,iy,drawing,mode,red,blue
 
-    img = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
-    img_marking = cv2.imread(sys.argv[2], cv2.IMREAD_COLOR)
+    if event == cv2.EVENT_LBUTTONDOWN:
+        drawing = True
+        ix,iy = x,y
 
-    # ======================================== #
-    # write all your codes here
+    elif event == cv2.EVENT_MOUSEMOVE:
+        if drawing == True:
+            if mode == True:
+                cv2.circle(img_marking,(x,y),5,(0,0,255),-1)
+                red = True
+            else:
+                cv2.circle(img_marking,(x,y),5,(255,0,0),-1)
+                blue = True
 
-    mask = cv2.cvtColor(img_marking, cv2.COLOR_BGR2GRAY) # dummy assignment for mask, change it to your result
+    elif event == cv2.EVENT_LBUTTONUP:
+        drawing = False
+        if mode == True:
+            cv2.circle(img_marking,(x,y),5,(0,0,255),-1)
+        else:
+            cv2.circle(img_marking,(x,y),5,(255,0,0),-1)	
+        if red and blue:
+            segmask_inv, k = recalculate_segmented_mask(img_marking, superpixels, color_hists, neighbors)			
+
+def recalculate_segmented_mask(img_marking, superpixels, color_hists, neighbors):
+    lower_red = np.array([0,0,255])
+    upper_red = np.array([0,0,255])
+    lower_blue = np.array([255,0,0])
+    upper_blue = np.array([255,0,0])
+    mask_blue = cv2.inRange(img_marking, lower_blue, upper_blue)
+    mask_red = cv2.inRange(img_marking, lower_red, upper_red)
+    mask_rb = cv2.bitwise_or(mask_red, mask_blue)
+    img2_fg = cv2.bitwise_and(img_marking,img_marking,mask = mask_rb)
     
-    centers, color_hists, superpixels, neighbors = superpixels_histograms_neighbors(img)
-    fg_segments, bg_segments = find_superpixels_under_marking(img_marking, superpixels)
+    fg_segments, bg_segments = find_superpixels_under_marking(img2_fg, superpixels)
     fg_cumulative_hist = cumulative_histogram_for_superpixels(fg_segments, color_hists)
     bg_cumulative_hist = cumulative_histogram_for_superpixels(bg_segments, color_hists)
     norm_hists = normalize_histograms(color_hists)
@@ -158,9 +184,36 @@ if __name__ == '__main__':
 	
     segmask = pixels_for_segment_selection(superpixels, np.nonzero(graph_cut))
     segmask = np.uint8(segmask * 255)
+    segmask_inv = cv2.bitwise_not(segmask)
+    cv2.imshow('segmentedmask',segmask_inv)
+    k = cv2.waitKey(1)
+    return (segmask_inv, k)
+	
+if __name__ == '__main__':
+   
+    # validate the input arguments
+    if (len(sys.argv) != 4):
+        help_message()
+        sys.exit()
 
-    # ======================================== #
+	# Initialization
+    img = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
+    img_marking = cv2.imread(sys.argv[2], cv2.IMREAD_COLOR)
+    centers, color_hists, superpixels, neighbors = superpixels_histograms_neighbors(img)
 
-    # read segmented mask file
-    output_name = sys.argv[3] + "mask.png"
-    cv2.imwrite(output_name, segmask);
+    cv2.namedWindow('image')
+    cv2.setMouseCallback('image',draw_circle) # function where segmentation happens
+
+    while(1):
+        cv2.imshow('image',img_marking)
+        k = cv2.waitKey(1) & 0xFF
+        if k == ord('m'):
+            mode = not mode
+        elif k == 27: # ESC Key press
+            segmask_inv, k = recalculate_segmented_mask(img_marking, superpixels, color_hists, neighbors)
+            # write  segmented mask file
+            output_name = sys.argv[3] + "mask.png"
+            cv2.imwrite(output_name, segmask_inv)	
+            break
+
+    cv2.destroyAllWindows()
