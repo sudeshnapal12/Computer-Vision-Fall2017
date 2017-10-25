@@ -8,7 +8,7 @@
 
 ### How to run?
 ```
->> python main_bonus.py astronaut.png astronaut_marking.png ./
+>> python main.py astronaut.png astronaut_marking.png ./
 ```
 Segmented to stored in 'mask.png'.
  
