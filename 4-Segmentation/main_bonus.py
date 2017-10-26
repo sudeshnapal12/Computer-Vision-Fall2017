@@ -192,13 +192,13 @@ def recalculate_segmented_mask(img_marking, superpixels, color_hists, neighbors)
 if __name__ == '__main__':
    
     # validate the input arguments
-    if (len(sys.argv) != 4):
+    if (len(sys.argv) != 3):
         help_message()
         sys.exit()
 
 	# Initialization
     img = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
-    img_marking = cv2.imread(sys.argv[2], cv2.IMREAD_COLOR)
+    img_marking = cv2.imread(sys.argv[1], cv2.IMREAD_COLOR)
     centers, color_hists, superpixels, neighbors = superpixels_histograms_neighbors(img)
 
     cv2.namedWindow('image')
@@ -212,7 +212,7 @@ if __name__ == '__main__':
         elif k == 27: # ESC Key press
             segmask_inv, k = recalculate_segmented_mask(img_marking, superpixels, color_hists, neighbors)
             # write  segmented mask file
-            output_name = sys.argv[3] + "mask.png"
+            output_name = sys.argv[2] + "mask.png"
             cv2.imwrite(output_name, segmask_inv)	
             break
 
