@@ -29,7 +29,7 @@ def help_message():
 # Calculate the SLIC superpixels, their histograms and neighbors
 def superpixels_histograms_neighbors(img):
     # SLIC
-    segments = slic(img, n_segments=500, compactness=20)
+    segments = slic(img, n_segments=500, compactness=22)
     segments_ids = np.unique(segments)
 
     # centers
