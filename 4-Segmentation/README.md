@@ -23,7 +23,7 @@ Implement an interactive interface with OpenCV so that we can draw the marking w
     
 ### How to run?
 ```
->> python main_bonus.py astronaut.png astronaut.png ./
+>> python main_bonus.py astronaut.png ./
 ```
 
 * Image window opens displaying an image to be segmented. Red is for foreground and Blue is for background.
