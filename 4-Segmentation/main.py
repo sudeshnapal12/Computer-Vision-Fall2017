@@ -139,8 +139,6 @@ if __name__ == '__main__':
 
     # ======================================== #
     # write all your codes here
-
-    mask = cv2.cvtColor(img_marking, cv2.COLOR_BGR2GRAY) # dummy assignment for mask, change it to your result
     
     centers, color_hists, superpixels, neighbors = superpixels_histograms_neighbors(img)
     fg_segments, bg_segments = find_superpixels_under_marking(img_marking, superpixels)
