@@ -26,6 +26,8 @@ def reconstruct_from_binary_patterns():
     scale_factor = 1.0
     ref_white = cv2.resize(cv2.imread("images/pattern000.jpg", cv2.IMREAD_GRAYSCALE) / 255.0, (0,0), fx=scale_factor,fy=scale_factor)
     ref_black = cv2.resize(cv2.imread("images/pattern001.jpg", cv2.IMREAD_GRAYSCALE) / 255.0, (0,0), fx=scale_factor,fy=scale_factor)
+    ref_color = cv2.resize(cv2.imread("images/pattern001.jpg"), (0,0), fx=scale_factor,fy=scale_factor)
+    
     ref_avg   = (ref_white + ref_black) / 2.0
     ref_on    = ref_avg + 0.05 # a threshold for ON pixels
     ref_off   = ref_avg - 0.05 # add a small buffer region
@@ -59,6 +61,7 @@ def reconstruct_from_binary_patterns():
 
     camera_points = []
     projector_points = []
+    camera_rgb_values = []
     corr_img = np.zeros((h, w, 3), dtype=np.float64)
     norm_img = np.zeros((h, w, 3), dtype=np.float64)
 	
@@ -83,9 +86,10 @@ def reconstruct_from_binary_patterns():
 			
             projector_points.append([[x_p, y_p]])
             camera_points.append([[x/2.0, y/2.0]])
+            camera_rgb_values.append(ref_color[y, x].tolist())
 			
             corr_img[y][x] = [x_p, y_p, 0]
-
+	
     # RGB format in MatplotLib and BGR format in openCV
     r = corr_img[:,:,0]
     g = corr_img[:,:,1]
@@ -125,12 +129,17 @@ def reconstruct_from_binary_patterns():
         # Use cv2.convertPointsFromHomogeneous to get real 3D points
         # name the resulted 3D points as "points_3d"
         points_3d = cv2.convertPointsFromHomogeneous(tri_points.T)
-		
+
+        camera_rgb_values = np.array(camera_rgb_values)
+        points_3d_color = np.zeros((points_3d.shape[0], points_3d.shape[1], 6), dtype=np.float64)
+        for i in range(0, points_3d.shape[0]):
+            points_3d_color[i][0] =  np.append(points_3d[i][0], camera_rgb_values[i])
+			
 		# apply another filter on the Z-component
-        mask = (points_3d[:,:,2] > 200) & (points_3d[:,:,2] < 1400)
-        points_3d = points_3d[mask]
+        mask = (points_3d_color[:,:,2] > 200) & (points_3d_color[:,:,2] < 1400)
+        points_3d_color = points_3d_color[mask]
 	
-	return points_3d
+	return points_3d_color
 	
 def write_3d_points(points_3d):
 	
@@ -139,9 +148,14 @@ def write_3d_points(points_3d):
     print("write output point cloud")
     print(points_3d.shape)
     output_name = sys.argv[1] + "output.xyz"
+    output_name_color = sys.argv[1] + "output_color.xyz"
     with open(output_name,"w") as f:
         for p in points_3d:
             f.write("%d %d %d\n"%(p[0],p[1],p[2]))
+			
+    with open(output_name_color,"w") as f:
+        for p in points_3d:
+            f.write("%d %d %d %d %d %d\n"%(p[0],p[1],p[2],p[3],p[4],p[5]))
 
     return points_3d
     
