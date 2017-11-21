@@ -15,3 +15,10 @@ Write an OpenCV program to do the following things:
 Your goal is to create 2 panoramas:
 * Using homographies and perspective warping on a common plane (3 images).
 * Using cylindrical warping (many images).
+
+## 4. Segmentation
+Your goal is to perform semi-automatic binary segmentation based on SLIC superpixels and graph-cuts:
+
+## 5. Structured Light [3D Reconstruction]
+Your goal is to reconstruct a scene from multiple structured light scannings of it.
+
