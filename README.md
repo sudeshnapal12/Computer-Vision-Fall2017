@@ -22,3 +22,9 @@ Your goal is to perform semi-automatic binary segmentation based on SLIC superpi
 ## 5. Structured Light [3D Reconstruction]
 Your goal is to reconstruct a scene from multiple structured light scannings of it.
 
+### 6. CNNs and Transfer Learning
+Your goal is to 
+* Train an MNIST CNN classifier on just the digits: 1, 4, 5 and 9
+* Use your trained model’s weights on the lower 4 layers to train a classifier for the rest of MNIST (excluding 1,4,5 and 9)
+  * Try to run as few epochs as possible to get a good classification (> 99% on test)
+  * Try a session with freezing the lower layers weights, and also a session of just fine-tuning the weights.
