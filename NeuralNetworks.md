@@ -74,4 +74,13 @@ eg: A car template might be red because most cars ended up red in dataset used t
   * Mini-batch update => update gradient after every batch. eg. every 256 images in a training set.
   * SGD => mini-batch size = 1 => update gradient after every sample. Online training / Online GD.
   
+### 4. Backpropagation
+ * Chain rule
+ * backprop value = (o/p gradient) * (local gradient
+ * Sigmoid function = Sigma(x) = 1/(1 + e^-x) </br>
+   d/dx (sigma_x) = (1-sigma_x)(sigma_x)
+ * Intution of common backprop operations:
+   * add => unchanged => distributes to i/p
+   * max => gives o/p to only one i/p => routes gradient
+   * multiply => swap i/p and multiply gradient
 
