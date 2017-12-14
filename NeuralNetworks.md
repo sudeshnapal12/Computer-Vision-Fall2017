@@ -74,7 +74,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
   * Mini-batch update => update gradient after every batch. eg. every 256 images in a training set.
   * SGD => mini-batch size = 1 => update gradient after every sample. Online training / Online GD.
   
-### 4. Backpropagation
+## 4. Backpropagation
  * Chain rule => need gradients in backprop
  * backprop value = (o/p gradient) * (local gradient
  * Sigmoid function = Sigma(x) = 1/(1 + e^-x) </br>
@@ -84,7 +84,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
    * max => routes gradient => gives o/p to only one i/p
    * multiply => switches i/p and multiply gradient
 
-### 5. Neural Networks
+## 5. Neural Networks
  * 2 layer NN example => s = W_2 max(0, W_1 * x)
  * 3 layer NN example => s = W_3 max(0,  W_2 max(0, W_1 * x))
  * If x = [3072 x 1], W1 = [100 x 3072], W2 = [10 x 100] in 2NN for a 10 class classifier. NN with 2 layers
@@ -121,7 +121,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
  * More layers => more complex functions => overfitting.
  * so use less layers? No use more layers with regularization (such as dropout, higher weiht decay).
  
- ### 6. CNNs
+ ## 6. CNNs
  * Similar to NN. CNN are applied to images.
  * NN has all FC layers. CNN has 3 types: Convolutional layers, Pooling layers nadn FC layers.
  * Conv layers => filters are used.
@@ -152,7 +152,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
        * I/p -> [Conv -> RELU -> Pool]*2 -> FC -> RELU -> FC
        * I/p -> [Conv -> RELU -> Conv -> RELU -> Pool]*3 -> [FC -> RELU]*2 -> FC
        
-### 7. Famous CNN architectures
+## 7. Famous CNN architectures
   1. LeNet
   2. AlexNet
   3. GoogLeNet/Inception
@@ -160,7 +160,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
   5. R-CNN
   6. YOLO
   
-### 8. Overfitting prevention
+## 8. Overfitting prevention
 * Data
   1. Data Augmentation
   2. Normalization
@@ -173,7 +173,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
   3. DropConnect
   4. Early stopping
   
- ### 9. Transfer learning
+ ## 9. Transfer learning
  * Proxy problems
  * Solutions
    * #### Autoencoders => (Encoder & Decoder) => Reconstruct input in output
@@ -185,7 +185,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
      * Arithmetics => (smiling woman - neural woman + neural man = smiling man)
      * Recoloring => Shape to image
 
-### 10. RNN (Recurrent Neural Networks)
+## 10. RNN (Recurrent Neural Networks)
   * Handle i/p wth time sequence (video), o/p sequence, sequence to sequence
   * Backprop through time
   * Visual Applications
@@ -199,7 +199,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
     * Big gaps/long sequences => exploding gradients/vanishing gradientts
   * Solution => <b> LSTMs </b>
   
-### 11. LSTMs (Long Short Term Memory Cells) => Forget gate
+## 11. LSTMs (Long Short Term Memory Cells) => Forget gate
   * Visual Applications
     * Image captioning
     * Image captioning with attention
