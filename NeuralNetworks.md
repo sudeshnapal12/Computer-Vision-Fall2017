@@ -80,11 +80,11 @@ eg: A car template might be red because most cars ended up red in dataset used t
  * Sigmoid function = Sigma(x) = 1/(1 + e^-x) </br>
    d/dx (sigma_x) = (1-sigma_x)(sigma_x)
  * Intution of common backprop operations:
-   * add => unchanged => distributes to i/p
-   * max => gives o/p to only one i/p => routes gradient
-   * multiply => swap i/p and multiply gradient
+   * add => distributes outer gradient to i/p
+   * max => routes gradient => gives o/p to only one i/p
+   * multiply => switches i/p and multiply gradient
 
-### 5. Neural Network
+### 5. Neural Networks
  * 2 layer NN example => s = W_2 max(0, W_1 * x)
  * 3 layer NN example => s = W_3 max(0,  W_2 max(0, W_1 * x))
  * If x = [3072 x 1], W1 = [100 x 3072], W2 = [10 x 100] in 2NN for a 10 class classifier. NN with 2 layers
@@ -152,4 +152,56 @@ eg: A car template might be red because most cars ended up red in dataset used t
        * I/p -> [Conv -> RELU -> Pool]*2 -> FC -> RELU -> FC
        * I/p -> [Conv -> RELU -> Conv -> RELU -> Pool]*3 -> [FC -> RELU]*2 -> FC
        
-### 
+### 7. Famous CNN architectures
+  1. LeNet
+  2. AlexNet
+  3. GoogLeNet/Inception
+  4. ResNet
+  5. R-CNN
+  6. YOLO
+  
+### 8. Overfitting prevention
+* Data
+  1. Data Augmentation
+  2. Normalization
+* Model
+  1. Regularization  Constrain model parameters.
+     * L2 regularization 
+     * L1 regularization
+     * ElasticNet regularization => L1+L2 
+  2. Dropout - Reduce DOF
+  3. DropConnect
+  4. Early stopping
+  
+ ### 9. Transfer learning
+ * Proxy problems
+ * Solutions
+   * #### Autoencoders => (Encoder & Decoder) => Reconstruct input in output
+     * Encoder = Convolution & Pooling
+     * Decoder = Deconvolution & Unpooling
+   * #### Semantic Segmentation
+   * #### Varational Autoencoders => Probabilitsic Autoencoder
+   * #### GANs (Generative Adversial Networks) => (Generator & Discriminator)
+     * Arithmetics => (smiling woman - neural woman + neural man = smiling man)
+     * Recoloring => Shape to image
+
+### 10. RNN (Recurrent Neural Networks)
+  * Handle i/p wth time sequence (video), o/p sequence, sequence to sequence
+  * Backprop through time
+  * Visual Applications
+    * Image captioning (one i/p => multiple o/ps) 
+    * Sentiment analysis (multiple i/ps => one o/p)
+    * Video captioning/machine translation (multiple i/p => multiple o/p)
+  * Examples
+    * char RNNs => generate sentences
+    * generate c code/latex code
+  * Problems
+    * Big gaps/long sequences => exploding gradients/vanishing gradientts
+  * Solution => <b> LSTMs </b>
+  
+### 11. LSTMs (Long Short Term Memory Cells) => Forget gate
+  * Visual Applications
+    * Image captioning
+    * Image captioning with attention
+    * Visual Question Answering
+    * VQA wih Attention
