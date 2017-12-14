@@ -28,7 +28,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
 * Normalize pixels
 
 * Loss
-  * SVM Loss </br>
+  * SVM Classifier - Hinge loss </br>
     * Score of correct class y_i greater than incorrect class score by atleast delta/margin.
     * SVM loss = data loss + regularization
     
@@ -48,4 +48,18 @@ eg: A car template might be red because most cars ended up red in dataset used t
     * HINGE Squared loss = max(0,-)^2
     * Gradient not differentiable eg. hinge loss at correct class, use <b> sub-gradients </b>
    
-  * Softmax Loss
+  * Softmax Classifier - Cross entropy loss </br>
+    * Probabilitistic output
+    * Softmax function = (e^f_yi) / (&#955; e^fj); f_yi = score of correct label </br>
+        Squashes values between 0 and 1 and sums to 1. </br>
+        Normalize scores for numerical stability. </br>
+    * Cross entropy loss = -log(sofmax loss) </br>
+        Maximum log liklihood = minimum (negative log liklihood) = Maximum a Posteriori estimation
+        Minimizinf KL divergence between 2 distributions.
+    * eg. small lambda/regularization param. [1,-2,0] = [e^-1, e_-2, e^0] = [2.71,0.14,1] = normlized to [0.7,0.04,0.26] </br>
+      large lambda [0.5, -1, 0] = [e^.5, e^-1, e^0] = [1.65,0.37,1] = normalized to [0.55,0.12,0.33]
+   
+   * SVM vs. Softmax
+     * SVM doesnot care if loss score difference is within delta. Softmax optimizes loss. Softmax micromanages.
+     * eg. Car classifier => classifies cars from humans faces etc. SVM won't optimize loss for car and frog.
+   
