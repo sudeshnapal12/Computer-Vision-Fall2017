@@ -19,6 +19,7 @@ However, to get this property we will have to go beyond raw pixels.
 
 ## 2. Linear Classification
 * f(xi, W, b) = Wxi + b
+* W is +ve if wrong prediction, -ve if correct prediction.
 * Image pixel squashed to 1D vector and put into xi. W has #classes = #rows and size of xi = #columns.
 * Interpretation 1 : Each row of W is Template of that class. So, class score = template * image. Image class = Highest score.
 * Interpretation 2 : Like doing NN. Distance(1 image in class, image) = their dot product instead of L1/L2. 
@@ -35,7 +36,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
     L = 1/N &#931; Li + &#955; R(W) </br>
     L = 1/N &#931;&#931; [max(0, f(xi, Wj) - f(xi, Wyi) + margin] +&#955; &#931;&#931; W*W </br>
     
-    * Regularization loss because W, 2*W, 100*W can use anything. Control weights.
+    * Regularization loss needed because W, 2*W, 100*W can use anything. Control weights.
     * Prefer weights uniformly diffused. </br> 
     Eg prefer w=[0.25,0.25,0.25,0.25] over w=[1,0,0,0] because lower regularization loss. </br>
     => less overfitting </br>
@@ -60,6 +61,17 @@ eg: A car template might be red because most cars ended up red in dataset used t
       large lambda [0.5, -1, 0] = [e^.5, e^-1, e^0] = [1.65,0.37,1] = normalized to [0.55,0.12,0.33]
    
    * SVM vs. Softmax
+     * Softmax gives probabilities of each class while SVM just gives score. 
      * SVM doesnot care if loss score difference is within delta. Softmax optimizes loss. Softmax micromanages.
      * eg. Car classifier => classifies cars from humans faces etc. SVM won't optimize loss for car and frog.
    
+## 3. Optimization
+* Gradient = vector of slopes along each dimension.
+* Step-size = learning rate = step taken in gradual hill descent in SGD = Hyperparameter.
+* decrease weights in step-size along the direction of gradient.
+* Gradient update
+  * M1 => update gradiant after running through all samples in training set.
+  * Mini-batch update => update gradient after every batch. eg. every 256 images in a training set.
+  * SGD => mini-batch size = 1 => update gradient after every sample. Online training / Online GD.
+  
+
