@@ -75,7 +75,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
   * SGD => mini-batch size = 1 => update gradient after every sample. Online training / Online GD.
   
 ### 4. Backpropagation
- * Chain rule
+ * Chain rule => need gradients in backprop
  * backprop value = (o/p gradient) * (local gradient
  * Sigmoid function = Sigma(x) = 1/(1 + e^-x) </br>
    d/dx (sigma_x) = (1-sigma_x)(sigma_x)
@@ -84,3 +84,39 @@ eg: A car template might be red because most cars ended up red in dataset used t
    * max => gives o/p to only one i/p => routes gradient
    * multiply => swap i/p and multiply gradient
 
+### 5. Neural Network
+ * 2 layer NN example => s = W_2 max(0, W_1 * x)
+ * 3 layer NN example => s = W_3 max(0,  W_2 max(0, W_1 * x))
+ * If x = [3072 x 1], W1 = [100 x 3072], W2 = [10 x 100] in 2NN for a 10 class classifier. NN with 2 layers
+ * Activation fuction for non-linearity. Here RELU is used. RELU = max(0, -)
+ * W_1, W_2 and W_3 are learned with SGD
+ * Hyperparameters = Size of hidden vectors.
+ * Activation functions
+   * <b> SIGMOID </b> 
+     * 1/ (1+ e^-x)
+     * limit between -1 and 1 
+     * saturate gradients / vanishing gradients => careful while initializing weights.
+     * Not zero centered
+   * <b> tanh </b>
+     * Vanishing gradients
+     * centered around zero
+     * prefer over sigmoid
+   * <b> RELU </b>
+     * f(x) = max(0,x)
+     * Thresholding at zero
+     * Not expensive
+     * dead neurons while training. large gradient = -ve slope => goes through RELU => update weights such that gradeints never flow again. => dead
+   * <b> Leaky RELU </b>
+     * add small slope eg. 0.01 for negative values.
+     * f(x)= 1(x<0)(αx) + 1(x>=0)(x)
+     * Results not consistent
+   * <b> Maxout </b>
+     * RELU + Leaky RELU
+     * f(x) = max(W_1*x + b_1, W_2*x + b_2)
+ * Which type of neuron to use? RELU by moitoring learning rate and dead neurons %.
+ * Full connected n/w
+ * # weights + # biases = # learnable parameters
+ * Neural network with one hidden layer can represent any continuous function.
+ * Then why so many hidden layers? because you don't know constraints and want to generalize.
+ * More layers => more complex functions => overfitting.
+ * so use less layers? No use more layers with regularization (such as dropout, higher weiht decay).
