@@ -114,9 +114,42 @@ eg: A car template might be red because most cars ended up red in dataset used t
      * RELU + Leaky RELU
      * f(x) = max(W_1*x + b_1, W_2*x + b_2)
  * Which type of neuron to use? RELU by moitoring learning rate and dead neurons %.
- * Full connected n/w
+ * Full connected n/w => all FC layers
  * #weights + #biases = #learnable parameters
  * Neural network with one hidden layer can represent any continuous function.
  * Then why so many hidden layers? because you don't know constraints and want to generalize.
  * More layers => more complex functions => overfitting.
  * so use less layers? No use more layers with regularization (such as dropout, higher weiht decay).
+ 
+ ### 6. CNNs
+ * Similar to NN. CNN are applied to images.
+ * NN has all FC layers. CNN has 3 types: Convolutional layers, Pooling layers nadn FC layers.
+ * Conv layers => filters are used.
+    * each filter is convolved across spatial dimension. Eg filter to detect edge in an image. So, the name convolution.
+    * preserve spatial dimension and squash depth. 
+    * Depth of Conv layer = # filters.
+    * 32x32x3 i/p and 5x5 filter then, weights in conv layer = 5x5x3 + 1 = 76 weight parameters.
+ * Pooling layers => Max pool
+    * Reduce spatial dimension (preferable only in pool and not in conv)
+    * F=3, S=2 => overlapping pooling
+    * F=2, S=2 => commonly used => reduced to half.
+ * FC => compute class scores.
+ * eg Architecture : [I/p => Conv => Relu => Pool => FC]
+    * i/p = [32x32x3], conv layer with 12 filters = [32x32x12], RELU = [32x32x12], Pool=[16x16x12], FC=[1x1x10] for 10 classes.
+ * Hyperparameter => 
+    * filter-size/local connectivity
+    * depth
+    * stride
+    * padding
+ * Contraints 
+    * Zero-padding for (i/p dimension = o/p dmension), constant size => P = (F-1)/2
+    * Dimension of o/p layer = (W - F + 2P)/S + 1
+ * TRICKS
+    * Parameter sharing => reduce #parameters => same weights in a depth slice. eg. 55x55*96 o/p layer has 96 depth slices of 55x55. If filter of 11x11x3 is used, #parameters = (11x11x3)x96 + 96
+    * Common architectures
+       * I/p -> FC (linear classifier)
+       * I/p -> Conv -> RELU -> FC
+       * I/p -> [Conv -> RELU -> Pool]*2 -> FC -> RELU -> FC
+       * I/p -> [Conv -> RELU -> Conv -> RELU -> Pool]*3 -> [FC -> RELU]*2 -> FC
+       
+### 
