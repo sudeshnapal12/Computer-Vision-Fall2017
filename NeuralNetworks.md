@@ -115,7 +115,7 @@ eg: A car template might be red because most cars ended up red in dataset used t
      * f(x) = max(W_1*x + b_1, W_2*x + b_2)
  * Which type of neuron to use? RELU by moitoring learning rate and dead neurons %.
  * Full connected n/w
- * # weights + # biases = # learnable parameters
+ * #weights + #biases = #learnable parameters
  * Neural network with one hidden layer can represent any continuous function.
  * Then why so many hidden layers? because you don't know constraints and want to generalize.
  * More layers => more complex functions => overfitting.
