@@ -1,0 +1,15 @@
+# Notes on Multi-View Geometry, Stereo, Structured Light, SFM, MVS, Visual Odometry
+
+## 1. Multi-View Geometry
+* PROBLEMS
+  * Finding 3D points of objects
+  * Find position of camera
+     * relative to world origin
+     * motion between cameras
+ * Focal Length
+    * Small => wider field of view
+    * Large => narrower field of view
+    * tan(theta/2) = W/2f, W = sensor size
+    * (cx, cy) = (W/2, H/2) 
+ 
+  
