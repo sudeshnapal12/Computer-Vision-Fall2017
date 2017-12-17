@@ -16,6 +16,17 @@ Your goal is to create 2 panoramas:
 * Using homographies and perspective warping on a common plane (3 images).
 * Using cylindrical warping (many images).
 
+## 3. Detection and Tracking
+Your goal is to:
+* Detect the face in the first frame of the movie
+   * Using pre-trained Viola-Jones detector
+* Track the face throughout the movie using:
+   * CAMShift
+   * Particle Filter
+   * Face detector + Kalman Filter (always run the kf.predict(), and run kf.correct() when you get a new face detection 
+Bonus (20pt): Face Detector + Optical Flow tracker (use the OF tracker whenever the face detector fails). <br/>
+**NOTE:** I have implemented Optical Flow filter but haven't checked failure of face detection. Lost 3 points in grading based on RMSE. Score = (1 - your_RMSD / 100)  * maximum_score
+
 ## 4. Segmentation
 Your goal is to perform semi-automatic binary segmentation based on SLIC superpixels and graph-cuts:
 
