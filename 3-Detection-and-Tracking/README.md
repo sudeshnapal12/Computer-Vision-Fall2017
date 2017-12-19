@@ -6,6 +6,19 @@
 Implemented face detection sng Voila Jones algorithm and tracked the face in a video using 4 different filters 
 namely, Camshift filter, Particle filter, Kalman Filter and Optical Flow filter.
 
+### Psuedo code of Kalman Filter:
+```
+Create Kalman Filter
+Start Tracking 
+While (some condition)
+    x, y = track()
+    Set Kalman Filter
+    Change Kalman Measurements
+    Predict Kalman
+    Kalman Correction
+    Update the center of the object
+```
+
 ### How to run?
 Change arguments as 
 * 1 = Camshift filter 
