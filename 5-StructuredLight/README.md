@@ -20,3 +20,5 @@
 ### Output:
 * correspondence.jpg : Shows the correspondences between camera and projector.
 * output.xyz : Final 3d points. Can be rendered using CloudCompare. http://www.danielgm.net/cc/release/
+
+**NOTE:** The colored output.xyz is wrong. Remember OpenCV uses BGR order.
